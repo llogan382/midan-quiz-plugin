@@ -29,13 +29,7 @@ class Mdn_social_quiz_Activator {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function activate() {
-
-
-		if ( ! function_exists('mdn_social_quiz_func') ) {
-
-			// Register Custom Post Type
-			function mdn_social_quiz_func() {
+	public static function activate(){
 
 				$labels = array(
 					'name'                  => 'Social Quizzes',
@@ -94,11 +88,6 @@ class Mdn_social_quiz_Activator {
 					'show_in_rest'          => true,
 				);
 				register_post_type( 'mdn_social_quiz', $args );
-
-			}
-			add_action( 'init', 'mdn_social_quiz_func', 0 );
-
-			}
 
 	}
 

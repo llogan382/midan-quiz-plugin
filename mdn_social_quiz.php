@@ -46,6 +46,9 @@ function activate_mdn_social_quiz() {
 	Mdn_social_quiz_Activator::activate();
 }
 
+
+add_action( 'init', 'activate_mdn_social_quiz', 0 );
+
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-mdn_social_quiz-deactivator.php
@@ -54,6 +57,7 @@ function deactivate_mdn_social_quiz() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-mdn_social_quiz-deactivator.php';
 	Mdn_social_quiz_Deactivator::deactivate();
 }
+
 
 register_activation_hook( __FILE__, 'activate_mdn_social_quiz' );
 register_deactivation_hook( __FILE__, 'deactivate_mdn_social_quiz' );
@@ -80,3 +84,46 @@ function run_mdn_social_quiz() {
 
 }
 run_mdn_social_quiz();
+
+
+
+abstract class WPOrg_Meta_Box
+{
+    public static function add()
+    {
+        $screens = ['post', 'mdn_social_quiz'];
+        foreach ($screens as $screen) {
+            add_meta_box(
+                'wporg_box_id',          // Unique ID
+                'Custom Meta Box Title', // Box title
+                [self::class, 'html'],   // Content callback, must be of type callable
+                $screen                  // Post type
+            );
+        }
+    }
+
+    public static function save($post_id)
+    {
+        if (array_key_exists('wporg_field', $_POST)) {
+            update_post_meta(
+                $post_id,
+                '_wporg_meta_key',
+                $_POST['wporg_field']
+            );
+        }
+    }
+
+    public static function html($post)
+    {
+        $value = get_post_meta($post->ID, '_wporg_meta_key', true);
+        ?>
+        <label for="wporg_field">Description for this field</label>
+        <input type="text" name="wporg_field" id="wporg_field" class="postbox"  value="<?php echo esc_attr( get_post_meta( $post->ID, 'smashing_post_class', true ) ); ?>">
+
+        </input>
+        <?php
+    }
+}
+
+add_action('add_meta_boxes', ['WPOrg_Meta_Box', 'add']);
+add_action('save_post', ['WPOrg_Meta_Box', 'save']);
