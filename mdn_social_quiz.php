@@ -127,3 +127,15 @@ abstract class WPOrg_Meta_Box
 
 add_action('add_meta_boxes', ['WPOrg_Meta_Box', 'add']);
 add_action('save_post', ['WPOrg_Meta_Box', 'save']);
+
+add_filter( 'template_include', 'my_plugin_templates' );
+function my_plugin_templates( $template ) {
+    $post_types = array( 'mdn_social_quiz' );
+
+    if ( is_post_type_archive( $post_types ) && ! file_exists( get_stylesheet_directory() . '/archive-mdn_social_quiz.php' ) )
+    $template = plugin_dir_path( __FILE__ ) . 'archive-mdn_social_quiz.php';
+    if ( is_singular( $post_types ) && ! file_exists( get_stylesheet_directory() . '/single-mdn_social_quiz.php' ) )
+        $template = plugin_dir_path( __FILE__ ) . 'single-mdn_social_quiz.php';
+
+    return $template;
+}
