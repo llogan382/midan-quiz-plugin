@@ -139,3 +139,9 @@ function my_plugin_templates( $template ) {
 
     return $template;
 }
+
+// Create a db table
+include( plugin_dir_path( __FILE__ ) . 'db-table.php');
+
+register_activation_hook( __FILE__, 'jal_install' );
+register_activation_hook( __FILE__, 'jal_install_data' );
