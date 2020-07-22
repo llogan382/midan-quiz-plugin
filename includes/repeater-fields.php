@@ -14,7 +14,7 @@ function Repeatable_meta_box_display() {
         $( '#add-row' ).on('click', function() {
             var row = $( '.empty-row.screen-reader-text' ).clone(true);
             row.removeClass( 'empty-row screen-reader-text' );
-            row.insertBefore( '#repeatable-fieldset-one tbody>tr:last' );
+            row.insertBefore( '#repeatable-fieldset-one div>tr:last' );
             return false;
         });
 
@@ -24,45 +24,57 @@ function Repeatable_meta_box_display() {
         });
     });
   </script>
-  <table id="repeatable-fieldset-one" width="100%">
-  <tbody>
+  <div id="repeatable-fieldset-one" width="100%">
+  <div>
     <?php
      if ( $gpminvoice_group ) :
       foreach ( $gpminvoice_group as $field ) {
     ?>
-    <tr>
-      <td width="15%">
-        <input type="text"  placeholder="Title" name="TitleItem[]" value="<?php if($field['TitleItem'] != '') echo esc_attr( $field['TitleItem'] ); ?>" /></td>
-      <td width="70%">
-      <textarea placeholder="Description" cols="55" rows="5" name="TitleDescription[]"> <?php if ($field['TitleDescription'] != '') echo esc_attr( $field['TitleDescription'] ); ?> </textarea></td>
-      <td width="15%"><a class="button remove-row" href="#1">Remove</a></td>
-    </tr>
+    <div>
+      <div width="15%">
+        <input type="text"  placeholder="Title" name="Question_Text[]" value="<?php if($field['Question_Text'] != '') echo esc_attr( $field['Question_Text'] ); ?>" /></div>
+
+      <p>
+        <input type="text" placeholder="Answer 1" name="question_answer_option1[]"> <?php if ($field['question_answer_option'] != '') echo esc_attr( $field['question_answer_option'] ); ?>
+    </p>
+    <p>
+        <input type="text" placeholder="Answer 2" name="question_answer_option2[]"> <?php if ($field['question_answer_option2'] != '') echo esc_attr( $field['question_answer_option2'] ); ?>
+    </p>
+    <p>
+        <input type="text" placeholder="Answer 3" name="question_answer_option3[]"> <?php if ($field['question_answer_option3'] != '') echo esc_attr( $field['question_answer_option3'] ); ?>
+    </p>
+    <p>
+        <input type="text" placeholder="Answer 4" name="question_answer_option4[]"> <?php if ($field['question_answer_option4'] != '') echo esc_attr( $field['question_answer_option4'] ); ?>
+    </p>
+
+      <div width="15%"><a class="button remove-row" href="#1">Remove</a></div>
+    </div>
     <?php
     }
     else :
     // show a blank one
     ?>
-    <tr>
-      <td>
-        <input type="text" placeholder="Title" title="Title" name="TitleItem[]" /></td>
-      <td>
-          <textarea  placeholder="Description" name="TitleDescription[]" cols="55" rows="5">  </textarea>
-          </td>
-      <td><a class="button  cmb-remove-row-button button-disabled" href="#">Remove</a></td>
-    </tr>
+    <div>
+      <div>
+        <input type="text" placeholder="Title" title="Title" name="Question_Text[]" /></div>
+      <div>
+          <textarea  placeholder="Description" name="question_answer_option[]" cols="55" rows="5">  </textarea>
+          </div>
+      <div><a class="button  cmb-remove-row-button button-disabled" href="#">Remove</a></div>
+    </div>
     <?php endif; ?>
 
     <!-- empty hidden one for jQuery -->
-    <tr class="empty-row screen-reader-text">
-      <td>
-        <input type="text" placeholder="Title" name="TitleItem[]"/></td>
-      <td>
-          <textarea placeholder="Description" cols="55" rows="5" name="TitleDescription[]"></textarea>
-          </td>
-      <td><a class="button remove-row" href="#">Remove</a></td>
-    </tr>
-  </tbody>
-</table>
+    <div class="empty-row screen-reader-text">
+      <div>
+        <input type="text" placeholder="Title" name="Question_Text[]"/></div>
+      <div>
+          <textarea placeholder="Description" cols="55" rows="5" name="question_answer_option[]"></textarea>
+          </div>
+      <div><a class="button remove-row" href="#">Remove</a></div>
+    </div>
+  </div>
+</div>
 <p><a id="add-row" class="button" href="#">Add another</a></p>
  <?php
 }
@@ -80,13 +92,21 @@ function custom_repeatable_meta_box_save($post_id) {
 
     $old = get_post_meta($post_id, 'mdn_quizzes', true);
     $new = array();
-    $invoiceItems = $_POST['TitleItem'];
-    $prices = $_POST['TitleDescription'];
-     $count = count( $invoiceItems );
+    $question_text = $_POST['Question_Text'];
+    $answer_option1 = $_POST['question_answer_option1'];
+    $answer_option2 = $_POST['question_answer_option2'];
+    $answer_option3 = $_POST['question_answer_option3'];
+    $answer_option4 = $_POST['question_answer_option4'];
+
+     $count = count( $question_text );
      for ( $i = 0; $i < $count; $i++ ) {
-        if ( $invoiceItems[$i] != '' ) :
-            $new[$i]['TitleItem'] = stripslashes( strip_tags( $invoiceItems[$i] ) );
-             $new[$i]['TitleDescription'] = stripslashes( $prices[$i] ); // and however you want to sanitize
+        if ( $question_text[$i] != '' ) :
+            $new[$i]['Question_Text'] = stripslashes( strip_tags( $question_text[$i] ) );
+             $new[$i]['question_answer_option1'] = stripslashes( $answer_option1[$i] ); // and however you want to sanitize
+             $new[$i]['question_answer_option2'] = stripslashes( $answer_option2[$i] ); // and however you want to sanitize
+             $new[$i]['question_answer_option3'] = stripslashes( $answer_option3[$i] ); // and however you want to sanitize
+             $new[$i]['question_answer_option4'] = stripslashes( $answer_option4[$i] ); // and however you want to sanitize
+
         endif;
     }
     if ( !empty( $new ) && $new != $old )
