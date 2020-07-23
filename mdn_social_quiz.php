@@ -87,46 +87,6 @@ run_mdn_social_quiz();
 
 
 
-abstract class WPOrg_Meta_Box
-{
-    public static function add()
-    {
-        $screens = ['post', 'mdn_social_quiz'];
-        foreach ($screens as $screen) {
-            add_meta_box(
-                'wporg_box_id',          // Unique ID
-                'Custom Meta Box Title', // Box title
-                [self::class, 'html'],   // Content callback, must be of type callable
-                $screen                  // Post type
-            );
-        }
-    }
-
-    public static function save($post_id)
-    {
-        if (array_key_exists('wporg_field', $_POST)) {
-            update_post_meta(
-                $post_id,
-                '_wporg_meta_key',
-                $_POST['wporg_field']
-            );
-        }
-    }
-
-    public static function html($post)
-    {
-        $value = get_post_meta($post->ID, '_wporg_meta_key', true);
-        ?>
-        <label for="wporg_field">Description for this field</label>
-        <input type="text" name="wporg_field" id="wporg_field" class="postbox"  value="<?php echo esc_attr( get_post_meta( $post->ID, 'smashing_post_class', true ) ); ?>">
-
-        </input>
-        <?php
-    }
-}
-
-add_action('add_meta_boxes', ['WPOrg_Meta_Box', 'add']);
-add_action('save_post', ['WPOrg_Meta_Box', 'save']);
 
 add_filter( 'template_include', 'my_plugin_templates' );
 function my_plugin_templates( $template ) {
@@ -140,8 +100,7 @@ function my_plugin_templates( $template ) {
     return $template;
 }
 
-// Create a db table
-include( plugin_dir_path( __FILE__ ) . 'db-table.php');
 
-register_activation_hook( __FILE__, 'jal_install' );
-register_activation_hook( __FILE__, 'jal_install_data' );
+include(plugin_dir_path( __FILE__ ) . 'includes/repeater-fields.php');
+add_action('admin_init', 'gpm_add_meta_boxes', 2);
+add_action('save_post', 'custom_repeatable_meta_box_save');
