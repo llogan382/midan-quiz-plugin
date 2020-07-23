@@ -10,125 +10,116 @@ function Repeatable_meta_box_display() {
      wp_nonce_field( 'gpm_repeatable_meta_box_nonce', 'gpm_repeatable_meta_box_nonce' );
     ?>
 <script type="text/javascript">
-jQuery(document).ready(function($) {
-    $('#add-row').on('click', function() {
-        var row = $('.empty-row.screen-reader-text').clone(true);
-        row.removeClass('empty-row screen-reader-text');
-        row.insertAfter('#repeatable-fieldset-one>div.questions:last');
-        return false;
-    });
+    jQuery(document).ready(function( $ ){
+        $( '#add-row' ).on('click', function() {
+            var row = $( '.empty-row.screen-reader-text' ).clone(true);
+            row.removeClass( 'empty-row screen-reader-text' );
+            row.insertBefore( '#repeatable-fieldset-one tbody>tr:last' );
+            return false;
+        });
 
-    $('.remove-row').on('click', function() {
-        $(this).parents('tr').remove();
-        return false;
+        $( '.remove-row' ).on('click', function() {
+            $(this).parents('tr').remove();
+            return false;
+        });
     });
-});
 </script>
-<div id="repeatable-fieldset-one" width="100%">
-    <div class="questions">
+<table id="repeatable-fieldset-one" width="100%">
+
+    <tbody>
         <?php
      if ( $gpminvoice_group ) :
       foreach ( $gpminvoice_group as $field ) {
     ?>
-            <div width="15%">
+        <tr>
+            <td width="15%">
                 <input type="text" placeholder="Title" name="Question_Text[]"
                     value="<?php if($field['Question_Text'] != '') echo esc_attr( $field['Question_Text'] ); ?>" />
-            </div>
+            </td>
 
-            <p>
+            <td>
                 <input type="text" placeholder="Question 1"
                     value=<?php if ($field['question_answer_option1'] != '') echo esc_attr( $field['question_answer_option1'] ); ?>
                     name="question_answer_option1[]">
-            </p>
-            <p>
+            </td>
+            <td>
                 <input type="text" placeholder="Question 2"
                     value=<?php if ($field['question_answer_option2'] != '') echo esc_attr( $field['question_answer_option2'] ); ?>
                     name="question_answer_option2[]">
-            </p>
-            <p>
+            </td>
+            <td>
                 <input type="text" placeholder="Question 3"
                     value=<?php if ($field['question_answer_option3'] != '') echo esc_attr( $field['question_answer_option3'] ); ?>
                     name="question_answer_option3[]">
-            </p>
-            <p>
+            </td>
+            <td>
                 <input type="text" placeholder="Question 4"
                     value=<?php if ($field['question_answer_option4'] != '') echo esc_attr( $field['question_answer_option4'] ); ?>
                     name="question_answer_option4[]">
-            </p>
-
+            </td>
             <div width="15%"><a class="button remove-row" href="#1">Remove</a></div>
-        </div>
+        </tr>
+
+
         <?php
     }
     else :
     // show a blank one
     ?>
 
-        <div>
-            <div width="15%">
+        <tr>
+            <td>
                 <input type="text" placeholder="Title" name="Question_Text[]"
                     value="<?php if($field['Question_Text'] != '') echo esc_attr( $field['Question_Text'] ); ?>" />
-            </div>
-
-            <p>
+            </td>
+            <td>
                 <input type="text" placeholder="Answer 1" name="question_answer_option1[]">
-            </p>
-            <p>
+            </td>
+            <td>
                 <input type="text" placeholder="Answer 2" name="question_answer_option2[]">
-            </p>
-            <p>
+            </td>
+            <td>
                 <input type="text" placeholder="Answer 3" name="question_answer_option3[]">
-            </p>
-            <p>
+            </td>
+            <td>
                 <input type="text" placeholder="Answer 4" name="question_answer_option4[]">
-            </p>
-
-            <div width="15%"><a class="button remove-row" href="#1">Remove</a></div>
-        </div>
+            </td>
 
 
-
-
-
+            <td><a class="button  cmb-remove-row-button button-disabled" href="#">Remove</a></td>
+        </tr>
         <?php endif; ?>
 
         <!-- empty hidden one for jQuery -->
-        <div class="empty-row screen-reader-text">
+        <tr class="empty-row screen-reader-text">
 
-            <div>
-                <div width="15%">
-                    <input type="text" placeholder="Title" name="Question_Text[]"
-                        value="<?php if($field['Question_Text'] != '') echo esc_attr( $field['Question_Text'] ); ?>" />
-                </div>
-
-                <p>
-                    <input type="text" placeholder="Answer 1" name="question_answer_option1[]">
-                </p>
-                <p>
-                    <input type="text" placeholder="Answer 2" name="question_answer_option2[]">
-                </p>
-                <p>
-                    <input type="text" placeholder="Answer 3" name="question_answer_option3[]">
-                </p>
-                <p>
-                    <input type="text" placeholder="Answer 4" name="question_answer_option4[]">
-                </p>
-
-                <div width="15%"><a class="button remove-row" href="#1">Remove</a></div>
-            </div>
-
-        </div>
-
-    </div> <!-- closing -->
-</div>
-</div>
+            <td>
+                <input type="text" placeholder="Title" name="Question_Text[]"
+                    value="<?php if($field['Question_Text'] != '') echo esc_attr( $field['Question_Text'] ); ?>" />
+            </td>
+            <td>
+                <input type="text" placeholder="Answer 1" name="question_answer_option1[]">
+            </td>
+            <td>
+                <input type="text" placeholder="Answer 2" name="question_answer_option2[]">
+            </td>
+            <td>
+                <input type="text" placeholder="Answer 3" name="question_answer_option3[]">
+            </td>
+            <td>
+                <input type="text" placeholder="Answer 4" name="question_answer_option4[]">
+            </td>
 
 
+            <td><a class="button remove-row" href="#">Remove</a></td>
+    </tr>
+  </tbody>
+</table>
 <p><a id="add-row" class="button" href="#">Add another</a></p>
 
 
 
-<?php
+            <?php
 }
 
 function custom_repeatable_meta_box_save($post_id) {
