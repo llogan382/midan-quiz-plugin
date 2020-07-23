@@ -16,3 +16,4 @@ foreach($meta_values as $meta_value){
 };
 
 
+print_r($meta_values);

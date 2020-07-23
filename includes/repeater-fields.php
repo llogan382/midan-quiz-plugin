@@ -35,16 +35,16 @@ function Repeatable_meta_box_display() {
         <input type="text"  placeholder="Title" name="Question_Text[]" value="<?php if($field['Question_Text'] != '') echo esc_attr( $field['Question_Text'] ); ?>" /></div>
 
       <p>
-        <input type="text" placeholder="Answer 1" name="question_answer_option1[]"> <?php if ($field['question_answer_option'] != '') echo esc_attr( $field['question_answer_option'] ); ?>
+        <input type="text" placeholder=<?php if ($field['question_answer_option1'] != '') echo esc_attr( $field['question_answer_option1'] ); ?> name="question_answer_option1[]">
     </p>
     <p>
-        <input type="text" placeholder="Answer 2" name="question_answer_option2[]"> <?php if ($field['question_answer_option2'] != '') echo esc_attr( $field['question_answer_option2'] ); ?>
+        <input type="text" placeholder=<?php if ($field['question_answer_option2'] != '') echo esc_attr( $field['question_answer_option2'] ); ?> name="question_answer_option2[]">
     </p>
     <p>
-        <input type="text" placeholder="Answer 3" name="question_answer_option3[]"> <?php if ($field['question_answer_option3'] != '') echo esc_attr( $field['question_answer_option3'] ); ?>
+        <input type="text" placeholder=<?php if ($field['question_answer_option3'] != '') echo esc_attr( $field['question_answer_option3'] ); ?> name="question_answer_option3[]">
     </p>
     <p>
-        <input type="text" placeholder="Answer 4" name="question_answer_option4[]"> <?php if ($field['question_answer_option4'] != '') echo esc_attr( $field['question_answer_option4'] ); ?>
+        <input type="text" placeholder=<?php if ($field['question_answer_option4'] != '') echo esc_attr( $field['question_answer_option4'] ); ?> name="question_answer_option4[]">
     </p>
 
       <div width="15%"><a class="button remove-row" href="#1">Remove</a></div>
@@ -54,14 +54,31 @@ function Repeatable_meta_box_display() {
     else :
     // show a blank one
     ?>
+
     <div>
-      <div>
-        <input type="text" placeholder="Title" title="Title" name="Question_Text[]" /></div>
-      <div>
-          <textarea  placeholder="Description" name="question_answer_option[]" cols="55" rows="5">  </textarea>
-          </div>
-      <div><a class="button  cmb-remove-row-button button-disabled" href="#">Remove</a></div>
+      <div width="15%">
+        <input type="text"  placeholder="Title" name="Question_Text[]" value="<?php if($field['Question_Text'] != '') echo esc_attr( $field['Question_Text'] ); ?>" /></div>
+
+      <p>
+        <input type="text" placeholder="Answer 1" name="question_answer_option1[]">
+    </p>
+    <p>
+        <input type="text" placeholder="Answer 2" name="question_answer_option2[]">
+    </p>
+    <p>
+        <input type="text" placeholder="Answer 3" name="question_answer_option3[]">
+    </p>
+    <p>
+        <input type="text" placeholder="Answer 4" name="question_answer_option4[]">
+    </p>
+
+      <div width="15%"><a class="button remove-row" href="#1">Remove</a></div>
     </div>
+
+
+
+
+
     <?php endif; ?>
 
     <!-- empty hidden one for jQuery -->
