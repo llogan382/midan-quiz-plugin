@@ -35,16 +35,16 @@ function Repeatable_meta_box_display() {
         <input type="text"  placeholder="Title" name="Question_Text[]" value="<?php if($field['Question_Text'] != '') echo esc_attr( $field['Question_Text'] ); ?>" /></div>
 
       <p>
-        <input type="text" placeholder=<?php if ($field['question_answer_option1'] != '') echo esc_attr( $field['question_answer_option1'] ); ?> name="question_answer_option1[]">
+        <input type="text" placeholder="Question 1" value=<?php if ($field['question_answer_option1'] != '') echo esc_attr( $field['question_answer_option1'] ); ?> name="question_answer_option1[]">
     </p>
     <p>
-        <input type="text" placeholder=<?php if ($field['question_answer_option2'] != '') echo esc_attr( $field['question_answer_option2'] ); ?> name="question_answer_option2[]">
+        <input type="text" placeholder="Question 2" value=<?php if ($field['question_answer_option2'] != '') echo esc_attr( $field['question_answer_option2'] ); ?> name="question_answer_option2[]">
     </p>
     <p>
-        <input type="text" placeholder=<?php if ($field['question_answer_option3'] != '') echo esc_attr( $field['question_answer_option3'] ); ?> name="question_answer_option3[]">
+        <input type="text" placeholder="Question 3" value=<?php if ($field['question_answer_option3'] != '') echo esc_attr( $field['question_answer_option3'] ); ?> name="question_answer_option3[]">
     </p>
     <p>
-        <input type="text" placeholder=<?php if ($field['question_answer_option4'] != '') echo esc_attr( $field['question_answer_option4'] ); ?> name="question_answer_option4[]">
+        <input type="text" placeholder="Question 4" value=<?php if ($field['question_answer_option4'] != '') echo esc_attr( $field['question_answer_option4'] ); ?> name="question_answer_option4[]">
     </p>
 
       <div width="15%"><a class="button remove-row" href="#1">Remove</a></div>
