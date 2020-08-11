@@ -112,14 +112,12 @@ function sports_bench_create_db() {
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 	//* Create the teams table
-	$table_name = $wpdb->prefix . 'sb_teams';
+	$table_name = $wpdb->prefix . 'social_quiz';
 	$sql = "CREATE TABLE $table_name (
-	team_id INTEGER NOT NULL AUTO_INCREMENT,
-	team_name TEXT NOT NULL,
-	team_city TEXT NOT NULL,
-	team_state TEXT NOT NULL,
-	team_stadium TEXT NOT NULL,
-	PRIMARY KEY (team_id)
+	quiz_id INTEGER NOT NULL AUTO_INCREMENT,
+	quiz_title TEXT NOT NULL,
+	quiz_subtitle TEXT NOT NULL,
+	PRIMARY KEY (quiz_id)
 	) $charset_collate;";
 	dbDelta( $sql );
    }
@@ -175,26 +173,23 @@ function sports_bench_team_admin_menu() {
    function sports_bench_teams_page_handler() {
 	 global $wpdb;
 	 echo '<form method="POST" action="?page=add_data">
-	<label>Team Name: </label><input type="text" name="team_name" /><br />
-	<label>Team City: </label><input type="text" name="team_city" /><br />
-	<label>Team State: </label><input type="text" name="team_state" /><br />
-	<label>Team Stadium: </label><input type="text" name="team_stadium" /><br />
+    <label>Quiz Name: </label><input type="text" name="quiz_title" /><br />
+	<label>Quiz Name: </label><input type="text" name="quiz_subtitle" /><br />
+
    <input type="submit" value="submit" />
    </form>';
 
-   $table_name = $wpdb->prefix . 'sb_teams';
-	 $default_row = $wpdb->get_row( "SELECT * FROM $table_name ORDER BY team_id DESC LIMIT 1" );
+   $table_name = $wpdb->prefix . 'social_quiz';
+	 $default_row = $wpdb->get_row( "SELECT * FROM $table_name ORDER BY quiz_id DESC LIMIT 1" );
    if ( $default_row != null ) {
-	$id = $default_row->team_id + 1;
+	$id = $default_row->quiz_id + 1;
    } else {
 	$id = 1;
    }
 	$default = array(
-	'team_id' => $id,
-	'team_name' => '',
-	'team_city' => '',
-	'team_state' => '',
-	'team_stadium' => '',
+	'quiz_id' => $id,
+	'quiz_title' => '',
+	'quiz_subtitle' => '',
    );
    $item = shortcode_atts( $default, $_REQUEST );
 
