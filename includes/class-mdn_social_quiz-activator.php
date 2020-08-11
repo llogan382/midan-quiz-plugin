@@ -29,6 +29,9 @@ class Mdn_social_quiz_Activator {
 	 *
 	 * @since    1.0.0
 	 */
+
+
+
 	public static function activate(){
 
 				$labels = array(

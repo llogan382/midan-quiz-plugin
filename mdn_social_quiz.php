@@ -103,31 +103,100 @@ function my_plugin_templates( $template ) {
 
 
 include(plugin_dir_path( __FILE__ ) . 'includes/repeater-fields.php');
-add_action('admin_init', 'gpm_add_meta_boxes', 2);
-add_action('save_post', 'custom_repeatable_meta_box_save');
 
+register_activation_hook( __FILE__, 'sports_bench_create_db' );
 
-register_activation_hook( __FILE__, 'create_quiz_tables' );
-function create_quiz_tables() {
-
+function sports_bench_create_db() {
 	global $wpdb;
-  	$version = get_option( 'midan_quiz_version', '1.0' );
 	$charset_collate = $wpdb->get_charset_collate();
-	$table_name = $wpdb->prefix . 'social_quiz';
-
-	$sql = "CREATE TABLE $table_name (
-		id mediumint(9) NOT NULL AUTO_INCREMENT,
-		time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-		quiztitle text DEFAULT '' NOT NULL,
-		quiz_subtitle text DEFAULT '' NOT NULL,
-		quiz_questions text DEFAULT '' NOT NULL,
-  		url varchar(55) DEFAULT '' NOT NULL,
-		UNIQUE KEY id (id)
-	) $charset_collate;";
-
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+	//* Create the teams table
+	$table_name = $wpdb->prefix . 'sb_teams';
+	$sql = "CREATE TABLE $table_name (
+	team_id INTEGER NOT NULL AUTO_INCREMENT,
+	team_name TEXT NOT NULL,
+	team_city TEXT NOT NULL,
+	team_state TEXT NOT NULL,
+	team_stadium TEXT NOT NULL,
+	PRIMARY KEY (team_id)
+	) $charset_collate;";
 	dbDelta( $sql );
+   }
+   register_activation_hook( __FILE__, 'sports_bench_create_db' );
 
 
 
+
+function gutenberg_can_edit_post_type( $post_type = 'mdn_social_quiz' ) {
+	$can_edit = true;
+	if ( ! post_type_exists( $post_type ) ) {
+		return false;
+		$can_edit = false;
+	}
+
+	if ( ! post_type_supports( $post_type, 'editor' ) ) {
+		return false;
+		$can_edit = false;
+	}
+
+	$post_type_object = get_post_type_object( $post_type );
+	if ( ! $post_type_object->show_in_rest ) {
+		return false;
+		$can_edit = false;
+	}
+
+	return true;
+	/**
+	 * Filter to allow plugins to enable/disable Gutenberg for particular post types.
+	 *
+	 * @since 1.5.2
+	 *
+	 * @param bool   $can_edit  Whether the post type can be edited or not.
+	 * @param string $post_type The post type being checked.
+	 */
+	return apply_filters( 'gutenberg_can_edit_post_type', $can_edit, $post_type );
 }
+
+add_filter('use_block_editor_for_post_type', 'prefix_disable_gutenberg', 10, 2);
+function prefix_disable_gutenberg($current_status, $post_type)
+{
+    // Use your post type key instead of 'product'
+    if ($post_type === 'mdn_social_quiz') return false;
+    return $current_status;
+}
+
+function sports_bench_team_admin_menu() {
+	global $team_page;
+	add_menu_page( __( 'Teams', 'sports-bench' ), __( 'Teams', 'sports-bench' ), 'edit_posts', 'add_data', 'sports_bench_teams_page_handler', 'dashicons-groups', 6 ) ;
+   }
+   add_action( 'admin_menu', 'sports_bench_team_admin_menu' );
+
+   function sports_bench_teams_page_handler() {
+	 global $wpdb;
+	 echo '<form method="POST" action="?page=add_data">
+	<label>Team Name: </label><input type="text" name="team_name" /><br />
+	<label>Team City: </label><input type="text" name="team_city" /><br />
+	<label>Team State: </label><input type="text" name="team_state" /><br />
+	<label>Team Stadium: </label><input type="text" name="team_stadium" /><br />
+   <input type="submit" value="submit" />
+   </form>';
+
+   $table_name = $wpdb->prefix . 'sb_teams';
+	 $default_row = $wpdb->get_row( "SELECT * FROM $table_name ORDER BY team_id DESC LIMIT 1" );
+   if ( $default_row != null ) {
+	$id = $default_row->team_id + 1;
+   } else {
+	$id = 1;
+   }
+	$default = array(
+	'team_id' => $id,
+	'team_name' => '',
+	'team_city' => '',
+	'team_state' => '',
+	'team_stadium' => '',
+   );
+   $item = shortcode_atts( $default, $_REQUEST );
+
+	$wpdb->insert( $table_name, $item );
+   }
