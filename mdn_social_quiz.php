@@ -44,6 +44,7 @@ define( 'MDN_SOCIAL_QUIZ_VERSION', '1.0.0' );
 function activate_mdn_social_quiz() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-mdn_social_quiz-activator.php';
 	Mdn_social_quiz_Activator::activate();
+
 }
 
 
@@ -104,3 +105,29 @@ function my_plugin_templates( $template ) {
 include(plugin_dir_path( __FILE__ ) . 'includes/repeater-fields.php');
 add_action('admin_init', 'gpm_add_meta_boxes', 2);
 add_action('save_post', 'custom_repeatable_meta_box_save');
+
+
+register_activation_hook( __FILE__, 'create_quiz_tables' );
+function create_quiz_tables() {
+
+	global $wpdb;
+  	$version = get_option( 'midan_quiz_version', '1.0' );
+	$charset_collate = $wpdb->get_charset_collate();
+	$table_name = $wpdb->prefix . 'social_quiz';
+
+	$sql = "CREATE TABLE $table_name (
+		id mediumint(9) NOT NULL AUTO_INCREMENT,
+		time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+		quiztitle text DEFAULT '' NOT NULL,
+		quiz_subtitle text DEFAULT '' NOT NULL,
+		quiz_questions text DEFAULT '' NOT NULL,
+  		url varchar(55) DEFAULT '' NOT NULL,
+		UNIQUE KEY id (id)
+	) $charset_collate;";
+
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	dbDelta( $sql );
+
+
+
+}
