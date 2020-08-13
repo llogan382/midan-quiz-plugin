@@ -1,161 +1,50 @@
 <?php
+function wporg_add_custom_box()
+{
 
-function gpm_add_meta_boxes() {
-    add_meta_box( 'gpminvoice-group', 'Custom Repeatable', 'Repeatable_meta_box_display', 'mdn_social_quiz', 'normal', 'default');
-}
+        add_meta_box(
+            'wporg_box_id',           // Unique ID
+            'Custom Meta Box Title',  // Box title
+            'wporg_custom_box_html',  // Content callback, must be of type callable
+            'mdn_social_quiz'                   // Post type
+        );
 
-function Repeatable_meta_box_display() {
-    global $post;
-    $gpminvoice_group = get_post_meta($post->ID, 'mdn_quizzes', true);
-     wp_nonce_field( 'gpm_repeatable_meta_box_nonce', 'gpm_repeatable_meta_box_nonce' );
-    ?>
-<script type="text/javascript">
-    jQuery(document).ready(function( $ ){
-        $( '#add-row' ).on('click', function() {
-            var row = $( '.empty-row.screen-reader-text' ).clone(true);
-            row.removeClass( 'empty-row screen-reader-text' );
-            row.insertBefore( '#repeatable-fieldset-one tbody>tr:last' );
-            return false;
-        });
-
-        $( '.remove-row' ).on('click', function() {
-            $(this).parents('tr').remove();
-            return false;
-        });
-    });
-</script>
-<table id="repeatable-fieldset-one" width="100%">
-
-    <tbody>
-        <?php
-     if ( $gpminvoice_group ) :
-      foreach ( $gpminvoice_group as $field ) {
-    ?>
-        <tr>
-            <td width="15%">
-                <input type="text" placeholder="Title" name="Question_Text[]"
-                    value="<?php if($field['Question_Text'] != '') echo esc_attr( $field['Question_Text'] ); ?>" />
-            </td>
-
-            <td>
-                <input type="text" placeholder="Question 1"
-                    value=<?php if ($field['question_answer_option1'] != '') echo esc_attr( $field['question_answer_option1'] ); ?>
-                    name="question_answer_option1[]">
-            </td>
-            <td>
-                <input type="text" placeholder="Question 2"
-                    value=<?php if ($field['question_answer_option2'] != '') echo esc_attr( $field['question_answer_option2'] ); ?>
-                    name="question_answer_option2[]">
-            </td>
-            <td>
-                <input type="text" placeholder="Question 3"
-                    value=<?php if ($field['question_answer_option3'] != '') echo esc_attr( $field['question_answer_option3'] ); ?>
-                    name="question_answer_option3[]">
-            </td>
-            <td>
-                <input type="text" placeholder="Question 4"
-                    value=<?php if ($field['question_answer_option4'] != '') echo esc_attr( $field['question_answer_option4'] ); ?>
-                    name="question_answer_option4[]">
-            </td>
-            <div width="15%"><a class="button remove-row" href="#1">Remove</a></div>
-        </tr>
-
-
-        <?php
     }
-    else :
-    // show a blank one
+add_action('add_meta_boxes', 'wporg_add_custom_box');
+
+
+
+function wporg_custom_box_html($post)
+{
+    $value = get_post_meta($post->ID, '_wporg_meta_key', true);
     ?>
+<label for="ques1">Question</label>
+<input name="ques1[]" class="ques" type="text">
+<label for="answer1">Answer</label>
+<input name="answer1[]" class="answer1" type="text">
 
-        <tr>
-            <td>
-                <input type="text" placeholder="Title" name="Question_Text[]"
-                    value="<?php if($field['Question_Text'] != '') echo esc_attr( $field['Question_Text'] ); ?>" />
-            </td>
-            <td>
-                <input type="text" placeholder="Answer 1" name="question_answer_option1[]">
-            </td>
-            <td>
-                <input type="text" placeholder="Answer 2" name="question_answer_option2[]">
-            </td>
-            <td>
-                <input type="text" placeholder="Answer 3" name="question_answer_option3[]">
-            </td>
-            <td>
-                <input type="text" placeholder="Answer 4" name="question_answer_option4[]">
-            </td>
-
-
-            <td><a class="button  cmb-remove-row-button button-disabled" href="#">Remove</a></td>
-        </tr>
-        <?php endif; ?>
-
-        <!-- empty hidden one for jQuery -->
-        <tr class="empty-row screen-reader-text">
-
-            <td>
-                <input type="text" placeholder="Title" name="Question_Text[]"
-                    value="<?php if($field['Question_Text'] != '') echo esc_attr( $field['Question_Text'] ); ?>" />
-            </td>
-            <td>
-                <input type="text" placeholder="Answer 1" name="question_answer_option1[]">
-            </td>
-            <td>
-                <input type="text" placeholder="Answer 2" name="question_answer_option2[]">
-            </td>
-            <td>
-                <input type="text" placeholder="Answer 3" name="question_answer_option3[]">
-            </td>
-            <td>
-                <input type="text" placeholder="Answer 4" name="question_answer_option4[]">
-            </td>
-
-
-            <td><a class="button remove-row" href="#">Remove</a></td>
-    </tr>
-  </tbody>
-</table>
-<p><a id="add-row" class="button" href="#">Add another</a></p>
-
-
-
-            <?php
+<input id="wp_custom_attachment" name="wp_custom_attachment" size="25" type="file" value="" />
+<?php
 }
 
-function custom_repeatable_meta_box_save($post_id) {
-    if ( ! isset( $_POST['gpm_repeatable_meta_box_nonce'] ) ||
-    ! wp_verify_nonce( $_POST['gpm_repeatable_meta_box_nonce'], 'gpm_repeatable_meta_box_nonce' ) )
-        return;
 
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
-        return;
+function wporg_save_postdata($post_id)
+{
 
-    if (!current_user_can('edit_post', $post_id))
-        return;
-
-    $old = get_post_meta($post_id, 'mdn_quizzes', true);
     $new = array();
-    $question_text = $_POST['Question_Text'];
-    $answer_option1 = $_POST['question_answer_option1'];
-    $answer_option2 = $_POST['question_answer_option2'];
-    $answer_option3 = $_POST['question_answer_option3'];
-    $answer_option4 = $_POST['question_answer_option4'];
-
-     $count = count( $question_text );
-     for ( $i = 0; $i < $count; $i++ ) {
-        if ( $question_text[$i] != '' ) :
-            $new[$i]['Question_Text'] = stripslashes( strip_tags( $question_text[$i] ) );
-             $new[$i]['question_answer_option1'] = stripslashes( $answer_option1[$i] ); // and however you want to sanitize
-             $new[$i]['question_answer_option2'] = stripslashes( $answer_option2[$i] ); // and however you want to sanitize
-             $new[$i]['question_answer_option3'] = stripslashes( $answer_option3[$i] ); // and however you want to sanitize
-             $new[$i]['question_answer_option4'] = stripslashes( $answer_option4[$i] ); // and however you want to sanitize
-
-        endif;
-    }
-    if ( !empty( $new ) && $new != $old )
-        update_post_meta( $post_id, 'mdn_quizzes', $new );
-    elseif ( empty($new) && $old )
-        delete_post_meta( $post_id, 'mdn_quizzes', $old );
+    $ques1 = $_POST['answer1'];
+    $answer1 = $_POST['ques1'];
+    $new[1]['ques']= $ques1;
+    $new[1]['answ']= $answer1;
 
 
+
+    update_post_meta(
+        $post_id,
+        '_wporg_meta_key',
+        $new[1]
+    );
+    //Here do whathever you want with this $title and $desc.
 }
+
+add_action('save_post', 'wporg_save_postdata');

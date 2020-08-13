@@ -102,5 +102,4 @@ function my_plugin_templates( $template ) {
 
 
 include(plugin_dir_path( __FILE__ ) . 'includes/repeater-fields.php');
-add_action('admin_init', 'gpm_add_meta_boxes', 2);
-add_action('save_post', 'custom_repeatable_meta_box_save');
+add_action('admin_init', 'wporg_add_custom_box', 2);
