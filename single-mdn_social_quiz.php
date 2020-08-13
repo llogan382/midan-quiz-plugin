@@ -1,19 +1,12 @@
 <?php
 
-echo "<h2>This is the single quiz page</h2>";
 
-$meta_values = get_post_meta( get_the_ID(), 'mdn_quizzes' )[0];
+function output_all_postmeta() {
 
-foreach($meta_values as $meta_value){
-    echo 'This is the value ' . $meta_value['Question_Text'] . '</br>';
-    echo 'This is the value ' . $meta_value['question_answer_option1'] . '</br></br>';
-    echo 'This is the value ' . $meta_value['question_answer_option2'] . '</br></br>';
-    echo 'This is the value ' . $meta_value['question_answer_option3'] . '</br></br>';
-    echo 'This is the value ' . $meta_value['question_answer_option4'] . '</br></br>';
+	$postmetas = get_post_meta(get_the_ID());
 
+    $just_answers = $postmetas['_wporg_meta_key'][0];
+    for
 
-
-};
-
-
-print_r($meta_values);
+}
+output_all_postmeta();
