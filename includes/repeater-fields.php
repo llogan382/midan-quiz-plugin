@@ -18,20 +18,67 @@ function wporg_custom_box_html($post)
 {
     $value = get_post_meta($post->ID, '_wporg_meta_key', true);
     ?>
-<label for="ques1">Question</label>
-<input name="ques1[]" class="ques" type="text" value="fav southern dish">
-<label for="answerA">A</label>
-<input name="answerA[]" class="answerA" type="text" value="bbq">
-<input id="wp_custom_attachment" name="wp_custom_attachment" size="25" type="file" value="" />
-<label for="answerB">B</label>
-<input name="answerB[]" class="answerB" type="text" value="collards">
-<input id="wp_custom_attachment" name="wp_custom_attachment" size="25" type="file" value="" />
-<label for="answerC">C</label>
-<input name="answerC[]" class="answerC" type="text" value="grits">
-<input id="wp_custom_attachment" name="wp_custom_attachment" size="25" type="file" value="" />
-<label for="answerD">D</label>
-<input name="answerD[]" class="answerD" type="text" value="sweet tea">
-<input id="wp_custom_attachment" name="wp_custom_attachment" size="25" type="file" value="" />
+ <table>
+       <tr>
+        <td><label class="ques" for="ques1">Question</label></td>
+        <td><input name="ques1[]" class="quesInp" type="text" value="fav southern dish"></td>
+        <td><label class="answAlab"for="answerA">A</label></td>
+        <td><input class="answerAinp" name="answerA[]" class="answerA" type="text" value="bbq"></td>
+        <td><label class="answBlab"for="answerB">B</label></td>
+        <td><input class="answerBinp" name="answerB[]" class="answerB" type="text" value="collards"></td>
+        <td><label class="answClab"for="answerC">C</label></td>
+        <td><input class="answerCinp" name="answerC[]" class="answerC" type="text" value="grits"></td>
+        <td><label class="answDlab"for="answerD">D</label></td>
+        <td><input class="answerDinp" name="answerD[]" class="answerD" type="text" value="sweet tea"></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td colspan="2"></td>
+
+        <td colspan="2"><input class="answ1File" id="wp_custom_attachment" name="wp_custom_attachment" size="25" type="file" value="" /></td>
+        <td colspan="2"><input class="answ2File" id="wp_custom_attachment" name="wp_custom_attachment" size="25" type="file" value="" /></td>
+        <td colspan="2"><input class="answ3File" id="wp_custom_attachment" name="wp_custom_attachment" size="25" type="file" value="" /></td>
+        <td colspan="2"><input class="answ4File" id="wp_custom_attachment" name="wp_custom_attachment" size="25" type="file" value="" /></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td colspan="10"></td>
+        <td>Add question</td>
+    </tr>
+
+    </table>
+    <table class="mdn-hidden">
+       <tr>
+        <td><label class="ques" for="ques1">Question</label></td>
+        <td><input name="ques1[]" class="quesInp" type="text" value="fav southern dish"></td>
+        <td><label class="answAlab"for="answerA">A</label></td>
+        <td><input class="answerAinp" name="answerA[]" class="answerA" type="text" value="bbq"></td>
+        <td><label class="answBlab"for="answerB">B</label></td>
+        <td><input class="answerBinp" name="answerB[]" class="answerB" type="text" value="collards"></td>
+        <td><label class="answClab"for="answerC">C</label></td>
+        <td><input class="answerCinp" name="answerC[]" class="answerC" type="text" value="grits"></td>
+        <td><label class="answDlab"for="answerD">D</label></td>
+        <td><input class="answerDinp" name="answerD[]" class="answerD" type="text" value="sweet tea"></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td colspan="2"></td>
+
+        <td colspan="2"><input class="answ1File" id="wp_custom_attachment" name="wp_custom_attachment" size="25" type="file" value="" /></td>
+        <td colspan="2"><input class="answ2File" id="wp_custom_attachment" name="wp_custom_attachment" size="25" type="file" value="" /></td>
+        <td colspan="2"><input class="answ3File" id="wp_custom_attachment" name="wp_custom_attachment" size="25" type="file" value="" /></td>
+        <td colspan="2"><input class="answ4File" id="wp_custom_attachment" name="wp_custom_attachment" size="25" type="file" value="" /></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td colspan="10"></td>
+        <td><button>Add Question</button></td>
+    </tr>
+
+    </table>
+    <!-- Make a hidden copy of the table -->
+    <!-- On click, 1) make hidden copy visible -->
+    <!-- 2) duplicate the table -->
 <?php
 }
 
@@ -50,11 +97,6 @@ function wporg_save_postdata($post_id){
         $answerD = $_POST['answerD'];
 
 
-		$supported_types = array(
-            'image/jpg',
-            'image/jpeg',
-            'image/png',
-        );
 		$arr_file_type = wp_check_filetype( basename( $_FILES['wp_custom_attachmentA']['name'] ) );
 		$uploaded_type = $arr_file_type['type'];
 
