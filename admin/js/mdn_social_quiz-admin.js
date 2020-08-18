@@ -28,3 +28,12 @@
  */
 
 
+function myFunction() {
+    var lastTable = document.querySelector('.mdn-hidden-input:last-of-type');
+    console.log('hi there luke');
+    var clonedTable = document.querySelector('table:last-of-type');
+    var clone = clonedTable.cloneNode(true);
+    clonedTable.after(clone);
+    lastTable.classList.toggle("hidden-table");
+
+}

@@ -3,6 +3,6 @@
  * included in this file.
  */
 
- .mdn-hidden{
-     display: none;;
- }
+ .hidden-table{
+    display: none;
+}
