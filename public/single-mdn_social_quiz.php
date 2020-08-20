@@ -1,19 +1,3 @@
-<?php
-
-/**
- * Provide a public-facing view for the plugin
- *
- * This file is used to markup the public-facing aspects of the plugin.
- *
- * @link       loganwebdev.com
- * @since      1.0.0
- *
- * @package    Mdn_social_quiz
- * @subpackage Mdn_social_quiz/public/partials
- */
-?>
-
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <div class="mdn-quiz-ques">
 <div class="mdn-quiz-grid">
     <div class="mdn-current-ques">
@@ -47,3 +31,29 @@
 </div>
 </div>
 <button onclick="nextquest()">Next Question</button>
+
+<!-- // function output_all_postmeta() {
+
+//     $postmetas = get_post_meta(get_the_ID(), '_wporg_meta_key');
+//     print_r($postmetas[1]);
+
+//     foreach($postmetas as $meta ){
+//         for( $i=0; $i <= count($meta); $i++){
+
+
+//             echo($meta[$i]['quiz_question'] . '</br>');
+//             echo($meta[$i]['answerA'] . '</br>');
+//             echo($meta[$i]['answerB'] . '</br>');
+//             echo($meta[$i]['answerC'] . '</br>');
+//             echo($meta[$i]['answerD'] . '</br>');
+//             echo('Next page');
+//         }
+//         // foreach($meta as $x) {
+//         //     echo $x['quiz_question'];
+
+
+//         //   }
+//     }
+//  }
+
+// output_all_postmeta(); -->

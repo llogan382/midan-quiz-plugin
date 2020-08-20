@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="mdn-quiz-ques">
+        <div class="mdn-quiz-grid">
+            <div class="mdn-current-ques">
+                Best place with kids?
+            </div>
+            <div class="mdn-answ mdn-current-answA">
+                <img src="https://picsum.photos/id/103/200/300" alt="">
+                <label for="ques1-answA">Mythos
+                <input type="checkbox" name="Mythos" id="ques1-answA">
+            </label>
+
+            </div>
+            <div class="mdn-answ mdn-current-answB">
+                <img src="https://picsum.photos/id/1029/200/300" alt="">
+                <label for="ques1-answB">Joymongers
+                <input type="checkbox" name="Joymongers" id="ques1-answB">
+            </label>
+            </div>
+            <div class="mdn-answ mdn-current-answC">
+                <img src="https://picsum.photos/id/1044/200/300" alt="">
+                <label for="ques1-answC">Yum Yums
+                <input type="checkbox" name="Yum Yums" id="ques1-answC">
+            </label>
+            </div>
+            <div class="mdn-answ mdn-current-answD">
+                <img src="https://picsum.photos/id/1055/200/300" alt="">
+                <label for="ques1-answD">Cugino Forno
+                <input type="checkbox" name="Cugino Forno" id="ques1-answD">
+            </label>
+            </div>
+        </div>
+    </div>
+    <button onclick="nextquest()">Next Question</button>
+
+    <script>
+        function nextquest(){
+            var checkbox = document.querySelectorAll('input');
+            var checkboxChecked = [];
+            for( var i =0; i < 4; i++){
+                if(checkbox[i].checked){
+                    // console.log(checkbox[0]);
+                    checkboxChecked.push(checkbox[i].name);
+                } else{
+                    // checkboxChecked.push(checkbox[i]."No response");
+
+                }
+
+            }
+            console.log(checkboxChecked);
+
+        }
+    </script>
+    <style>
+        .mdn-answ{
+            width: 200px;
+            display: flex;
+            flex-direction: column;;
+        }
+        .mdn-current-ques{
+            grid-area: ques-txt;
+        }
+        .mdn-current-answA{
+            grid-area: answA;
+        }
+        .mdn-current-answB{
+            grid-area: answB;
+        }        .mdn-current-answC{
+            grid-area: answC;
+        }        .mdn-current-answD{
+            grid-area: answD;
+        }
+        .mdn-quiz-grid{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+            "ques-txt ques-txt"
+            "answA answB"
+            "answC answD";
+        }
+    </style>
+</body>
+</html>
+

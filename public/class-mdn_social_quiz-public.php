@@ -99,5 +99,8 @@ class Mdn_social_quiz_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mdn_social_quiz-public.js', array( 'jquery' ), $this->version, false );
 
 	}
+	public function load_quiz_cpt(){
+		require_once plugin_dir_path( __FILE__ ) . 'single-mdn_social_quiz.php';
+	}
 
 }

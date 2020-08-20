@@ -37,3 +37,4 @@ function myFunction() {
     lastTable.classList.toggle("hidden-table");
 
 }
+

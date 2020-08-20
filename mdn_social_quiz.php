@@ -94,12 +94,13 @@ function my_plugin_templates( $template ) {
 
     if ( is_post_type_archive( $post_types ) && ! file_exists( get_stylesheet_directory() . '/archive-mdn_social_quiz.php' ) )
     $template = plugin_dir_path( __FILE__ ) . 'archive-mdn_social_quiz.php';
-    if ( is_singular( $post_types ) && ! file_exists( get_stylesheet_directory() . '/single-mdn_social_quiz.php' ) )
-        $template = plugin_dir_path( __FILE__ ) . 'single-mdn_social_quiz.php';
+    if ( is_singular( $post_types ) && ! file_exists( get_stylesheet_directory() . '/public/single-mdn_social_quiz.php' ) )
+        $template = plugin_dir_path( __FILE__ ) . '/public/single-mdn_social_quiz.php';
 
     return $template;
 }
 
 
 include(plugin_dir_path( __FILE__ ) . 'includes/repeater-fields.php');
+
 add_action('admin_init', 'wporg_add_custom_box', 2);

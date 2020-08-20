@@ -6,3 +6,30 @@
  .hidden-table{
     display: none;
 }
+
+ .mdn-answ{
+    width: 200px;
+    display: flex;
+    flex-direction: column;;
+}
+.mdn-current-ques{
+    grid-area: ques-txt;
+}
+.mdn-current-answA{
+    grid-area: answA;
+}
+.mdn-current-answB{
+    grid-area: answB;
+}        .mdn-current-answC{
+    grid-area: answC;
+}        .mdn-current-answD{
+    grid-area: answD;
+}
+.mdn-quiz-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+    "ques-txt ques-txt"
+    "answA answB"
+    "answC answD";
+}
