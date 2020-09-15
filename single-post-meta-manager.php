@@ -18,6 +18,12 @@ if ( ! defined( 'WPINC' ) ) {
 
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-single-post-meta-manager.php';
 
+require_once plugin_dir_path(  __FILE__ ) . 'includes/class-mdn-quiz-cpt.php';
+
+function create_quiz_cpt(){
+	Mdn_Quiz_Cpt::activate();
+}
+
 function run_single_post_meta_manager() {
 
 	$spmm = new Single_Post_Meta_Manager();
@@ -26,3 +32,4 @@ function run_single_post_meta_manager() {
 }
 
 run_single_post_meta_manager();
+add_action('init', 'create_quiz_cpt');

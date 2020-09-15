@@ -1,6 +1,5 @@
 <?php
-
-function wporg_add_custom_box()
+public function wporg_add_custom_box()
 {
 
         add_meta_box(
@@ -15,7 +14,7 @@ add_action('add_meta_boxes', 'wporg_add_custom_box');
 
 
 
-function wporg_custom_box_html($post){
+public function wporg_custom_box_html($post){
     $value = get_post_meta($post->ID, '_wporg_meta_key', true);
     wp_nonce_field( 'pre_repeatable_meta_box_nonce', 'pre_repeatable_meta_box_nonce' );
 
@@ -131,7 +130,7 @@ function wporg_custom_box_html($post){
 
 
 </table>
-<button onclick="myFunction()">Add Question</button>
+<button onclick="mypublic Function()">Add Question</button>
 <!-- Make a hidden copy of the table -->
 <!-- On click, 1) make hidden copy visible -->
 <!-- 2) duplicate the table -->
@@ -141,7 +140,7 @@ add_action('save_post', 'wporg_save_postdata');
 
 
 
-function wporg_save_postdata($post_id){
+public function wporg_save_postdata($post_id){
 
     if ( ! isset( $_POST['pre_repeatable_meta_box_nonce'] ) ||
     ! wp_verify_nonce( $_POST['pre_repeatable_meta_box_nonce'], 'pre_repeatable_meta_box_nonce' ) )

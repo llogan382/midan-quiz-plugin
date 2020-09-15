@@ -12,6 +12,9 @@ Single Post Meta Manager displays the post meta data associated with a given pos
 
 ## Description
 
+SEE THIS LINK TO AN ARTICLE EXPLAINING THIS PLUGIN
+https://code.tutsplus.com/tutorials/object-oriented-programming-in-wordpress-building-the-plugin-ii--cms-21105
+
 Single Post Meta Manager displays the post meta data associated with a given post on the single post edit screen in the WordPress dashboard.
 
 The plugin does not write any information to the database - it simply reads the information already stored and then provides the information in a user-friendly format.

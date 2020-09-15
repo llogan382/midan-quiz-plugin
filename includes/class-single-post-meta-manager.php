@@ -22,10 +22,12 @@ class Single_Post_Meta_Manager {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-single-post-meta-manager-admin.php';
 
+
 		require_once plugin_dir_path( __FILE__ ) . 'class-single-post-meta-manager-loader.php';
 		$this->loader = new Single_Post_Meta_Manager_Loader();
 
 	}
+
 
 	private function define_admin_hooks() {
 
