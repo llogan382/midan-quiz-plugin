@@ -94,10 +94,16 @@ add_action( 'init', 'activate', 0 );
 
 
 
+
 add_action('admin_init', 'gpm_add_meta_boxes', 2);
 
 function gpm_add_meta_boxes() {
-    add_meta_box( 'gpminvoice-group', 'Custom Repeatable', 'Repeatable_meta_box_display', 'lwd_social_quiz', 'normal', 'default');
+    add_meta_box( '
+    gpminvoice-group',
+    'Custom Repeatable',
+    'Repeatable_meta_box_display',
+    'lwd_social_quiz',
+    'normal', 'default');
 }
 
 function Repeatable_meta_box_display() {
