@@ -1,7 +1,6 @@
 <?php
 
-function showAdminMeta(){
-        global $post;
+function showAdminMeta($post){
         $value = get_post_meta($post, '_wporg_meta_key', true);
         wp_nonce_field( 'pre_repeatable_meta_box_nonce', 'pre_repeatable_meta_box_nonce' );
 
@@ -12,8 +11,6 @@ function showAdminMeta(){
 
 <table class="quesTables">
     <tr>
-
-
         <td><label class="ques" for="quiz_question">Question</label></td>
         <td><input name="quiz_question[]" class="quesInp" type="text" value="<?php echo $x['quiz_question']; ?>"/></td>
         <td><label class="answAlab" for="answerA">A</label></td>

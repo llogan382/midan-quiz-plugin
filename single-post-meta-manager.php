@@ -25,10 +25,6 @@ require_once(plugin_dir_path(__FILE__).'admin/class-save-post-data.php');
 
 
 
-$dog = new Dog;
-$dog->hook_into_wordpress();
-
-
 $admin_save = new AdminSaveMeta;
 $admin_save->hook_into_wordpress();
 
