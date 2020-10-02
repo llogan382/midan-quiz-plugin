@@ -182,6 +182,17 @@ abstract class LWDQuiz
 
 
     </table>
+    <script>
+function myFunction() {
+    var lastTable = document.querySelector('.mdn-hidden-input:last-of-type');
+    var clonedTable = document.querySelector('table:last-of-type');
+    var clone = clonedTable.cloneNode(true);
+    clonedTable.after(clone);
+    lastTable.classList.toggle("hidden-table");
+
+}
+        </script>
+
     <button onclick="myFunction()">Add Question</button>
     <!-- Make a hidden copy of the table -->
     <!-- On click, 1) make hidden copy visible -->
@@ -193,3 +204,10 @@ abstract class LWDQuiz
 
 
 add_action('add_meta_boxes', ['LWDQuiz', 'add']);
+
+function wpb_hook_button() {
+    ?>
+
+    <?php
+}
+add_action('wp_head', 'wpb_hook_button');

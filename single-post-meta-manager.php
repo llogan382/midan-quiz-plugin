@@ -23,8 +23,6 @@ require_once(plugin_dir_path(__FILE__).'admin/class-save-post-data.php');
 // require_once(plugin_dir_path(__FILE__).'admin/partials/class-meta-admin-display.php');
 
 
-
-
 $admin_save = new AdminSaveMeta;
 $admin_save->hook_into_wordpress();
 
