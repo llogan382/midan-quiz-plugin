@@ -5,9 +5,10 @@ abstract class LWDQuiz
     {
             add_meta_box(
                 'wporg_box_id',          // Unique ID
-                'Custom Meta Box Title', // Box title
                 [self::class, 'html'],   // Content callback, must be of type callable
-                'mdn_social_quiz'                  // Post type
+                'mdn_social_quiz',
+                'normal',
+                                  // Post type
             );
         }
 
@@ -203,11 +204,8 @@ function myFunction() {
 }
 
 
-add_action('add_meta_boxes', ['LWDQuiz', 'add']);
+add_action('add_meta_boxes', ['LWDQuiz', 'add'], 10, 2);
+add_action('save_post', ['LWDQuiz', 'save']);
 
-function wpb_hook_button() {
-    ?>
 
-    <?php
-}
-add_action('wp_head', 'wpb_hook_button');
+
